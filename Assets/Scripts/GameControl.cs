@@ -11,4 +11,10 @@ public class GameControl : MonoBehaviour
             SceneManager.LoadScene(0);
         }
     }
+
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
 }
