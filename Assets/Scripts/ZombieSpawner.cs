@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
 
@@ -7,6 +8,7 @@ public class ZombieSpawner : MonoBehaviour
     public GameObject zombiePrefab;
     public Transform[] spawnPoints;
     public TextMeshProUGUI roundText;
+    public BreakManager breakManager;
 
     [Header("Round Settings")]
     public int currentRound = 1;
@@ -22,6 +24,7 @@ public class ZombieSpawner : MonoBehaviour
     private int zombiesSpawnedThisRound = 0;
     private float nextSpawnTime;
     private bool roundInProgress = true;
+    private bool endingRound = false;
 
     void Start()
     {
@@ -38,9 +41,11 @@ public class ZombieSpawner : MonoBehaviour
             nextSpawnTime = Time.time + spawnInterval;
         }
 
-        if (zombiesSpawnedThisRound >= zombiesToSpawn && zombiesAlive <= 0)
+        if (!endingRound && zombiesSpawnedThisRound >= zombiesToSpawn && zombiesAlive <= 0)
         {
-            NextRound();
+            Debug.Log("ROUND ENDED");
+
+            StartCoroutine(EndRound());
         }
     }
 
@@ -49,6 +54,8 @@ public class ZombieSpawner : MonoBehaviour
         zombiesSpawnedThisRound = 0;
         zombiesAlive = 0;
         roundInProgress = true;
+        endingRound = false;
+        nextSpawnTime = Time.time + spawnInterval;
         UpdateRoundUI();
     }
 
@@ -78,6 +85,22 @@ public class ZombieSpawner : MonoBehaviour
     public void ZombieKilled()
     {
         zombiesAlive--;
+
+        if (zombiesAlive < 0)
+            zombiesAlive = 0;
+    }
+
+    IEnumerator EndRound()
+    {
+        endingRound = true;
+        roundInProgress = false;
+
+        if (breakManager != null)
+        {
+            yield return StartCoroutine(breakManager.StartBreak());
+        }
+
+        NextRound();
     }
 
     void NextRound()

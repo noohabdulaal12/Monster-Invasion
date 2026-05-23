@@ -13,7 +13,7 @@ public class Zombie : MonoBehaviour
     public float disengageRange = 2.2f;
     public float attackRate = 1.2f;
     public float attackAnimLockTime = 0.45f;
-    public float damageDelay = 0.2f; 
+    public float damageDelay = 0.2f;
     private float nextAttackTime;
     private bool isAttacking = false;
     private bool inAttackZone = false;
@@ -21,6 +21,7 @@ public class Zombie : MonoBehaviour
 
     [Header("Target")]
     public Transform target;
+    private BuildWall wallTarget;
 
     [Header("Components")]
     public NavMeshAgent agent;
@@ -88,10 +89,21 @@ public class Zombie : MonoBehaviour
     {
         if (isDead || target == null || agent == null) return;
 
-        float distance = Vector3.Distance(transform.position, target.position);
-
         PlayIdleSound();
         PlayFootstepSound();
+
+        BuildWall nearbyWall = FindWallInAttackRange();
+
+        if (nearbyWall != null)
+        {
+            wallTarget = nearbyWall;
+            AttackWallBehaviour();
+            return;
+        }
+
+        wallTarget = null;
+
+        float distance = Vector3.Distance(transform.position, target.position);
 
         if (isAttacking)
         {
@@ -133,6 +145,91 @@ public class Zombie : MonoBehaviour
                 AttackPlayer();
                 nextAttackTime = Time.time + attackRate;
             }
+        }
+    }
+
+    BuildWall FindWallInAttackRange()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, attackRange);
+
+        foreach (Collider hit in hits)
+        {
+            BuildWall wall = hit.GetComponentInParent<BuildWall>();
+
+            if (wall != null)
+                return wall;
+        }
+
+        return null;
+    }
+
+    void AttackWallBehaviour()
+    {
+        if (wallTarget == null || isDead) return;
+
+        if (isAttacking)
+        {
+            agent.isStopped = true;
+            SetMoveAnimation(0f);
+            FaceWall();
+            return;
+        }
+
+        if (agent.isOnNavMesh)
+            agent.isStopped = true;
+
+        SetMoveAnimation(0f);
+        FaceWall();
+
+        if (Time.time >= nextAttackTime)
+        {
+            AttackWall();
+            nextAttackTime = Time.time + attackRate;
+        }
+    }
+
+    void AttackWall()
+    {
+        if (isAttacking || isDead || wallTarget == null) return;
+
+        isAttacking = true;
+        damageAppliedThisAttack = false;
+
+        if (agent != null && agent.isOnNavMesh)
+            agent.isStopped = true;
+
+        if (animator != null)
+        {
+            animator.SetFloat("Speed", 0f);
+            animator.SetTrigger("Attack");
+        }
+
+        PlayClip(attackClip);
+
+        Invoke(nameof(DealWallDamage), damageDelay);
+        Invoke(nameof(EndAttack), attackAnimLockTime);
+    }
+
+    void DealWallDamage()
+    {
+        if (isDead || damageAppliedThisAttack) return;
+        if (wallTarget == null) return;
+
+        wallTarget.TakeDamage(damage);
+        damageAppliedThisAttack = true;
+    }
+
+    void FaceWall()
+    {
+        if (wallTarget == null) return;
+
+        Vector3 lookPos = wallTarget.transform.position - transform.position;
+        lookPos.y = 0f;
+
+        if (lookPos.sqrMagnitude > 0.001f)
+        {
+            Quaternion rot = Quaternion.LookRotation(lookPos);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, turnSpeed * Time.deltaTime);
         }
     }
 

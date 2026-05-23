@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
         UpdateCoinsUI();
     }
 
-    void UpdateCoinsUI()
+    public void UpdateCoinsUI()
     {
         if (coinsText != null)
             coinsText.text = "Coins: " + coins;
