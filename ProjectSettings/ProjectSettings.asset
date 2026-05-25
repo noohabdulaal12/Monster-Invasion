@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: 8b5dea8234954f745a4b592b167dbc9c
+  productGUID: 0bf50986df5f37841aa23eb437a3fc65
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: zombie invation
+  productName: Monster Invasion
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -846,14 +846,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: zombie invation
+  metroPackageName: Monster Invasion
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: zombie invation
+  metroApplicationDescription: Monster Invasion
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -922,13 +922,13 @@ PlayerSettings:
   qnxGraphicConfPath: 
   apiCompatibilityLevel: 6
   captureStartupLogs: {}
-  activeInputHandler: 1
+  activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 70130d5b-52aa-4fb7-a0c0-789ffc5a540d
+  cloudProjectId: a2049daf-73da-4326-b7e2-020be8682649
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: zombie invation
-  organizationId: hatemstereo17
+  projectName: Monster Invasion
+  organizationId: isaali11
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
