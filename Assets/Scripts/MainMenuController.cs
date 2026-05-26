@@ -6,6 +6,7 @@ public class MainMenuController : MonoBehaviour
     [Header("Menu Panels")]
     [SerializeField] private GameObject MainMenu;
     [SerializeField] private GameObject LevelSelect;
+    [SerializeField] private GameObject HowToPlay;
 
     [Header("Map Settings")]
     [SerializeField] private string[] mapNames = { "Playground", "City_noof" };
@@ -14,18 +15,29 @@ public class MainMenuController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        ShowMainMenu();
+        MainMenu.SetActive(true);
     }
     public void ShowMainMenu()
     {
         MainMenu.SetActive(true);
         LevelSelect.SetActive(false);
     }
+    public void ShowMainMenu2()
+    {
+        MainMenu.SetActive(true);
+        HowToPlay.SetActive(false);
+    } 
     public void ShowLevelSelect()
     {
         MainMenu.SetActive(false);
         LevelSelect.SetActive(true);
     }
+    public void ShowHowToPlay()
+    {
+        MainMenu.SetActive(false);
+        HowToPlay.SetActive(true);
+    } 
+        
     public void LoadSpecificMap(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
