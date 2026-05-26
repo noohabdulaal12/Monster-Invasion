@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4673417726747911930}
   - component: {fileID: 5351874766827872028}
   - component: {fileID: 3306362623795337593}
+  - component: {fileID: -3475879470684047952}
   m_Layer: 0
   m_Name: Dungeon_Floor_Trap_Star
   m_TagString: Untagged
@@ -126,7 +127,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c973f6dca6da7af478753608af2c9a3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Trap
-  damage: 100
-  destroyOnUse: 0
-  cooldown: 0
+  damage: 20
+  destroyOnUse: 1
+  cooldown: 2
   triggerEffect: {fileID: 0}
+--- !u!65 &-3475879470684047952
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5801036630915154821}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.4, y: 0.089145936, z: 1.4}
+  m_Center: {x: 0, y: 0, z: 0}

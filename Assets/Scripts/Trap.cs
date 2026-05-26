@@ -24,26 +24,17 @@ public class Trap : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Only react to objects tagged "Enemy"
-        if (!other.CompareTag("Enemy")) return;
-        Debug.Log("zombie 1");
+        // Only react to objects tagged "Player"
+        if (other.CompareTag("Player")) return;
         if (isOnCooldown) return;
 
         // Try to find a Health component on the enemy or its parent
-        Zombie health = other.GetComponent<Zombie>()
-                     ?? other.GetComponentInParent<Zombie>();
+        PlayerHealth health = other.GetComponent<PlayerHealth>()
+                     ?? other.GetComponentInParent<PlayerHealth>();
 
         if (health != null)
         {
-            Debug.Log("zombie 2");
             health.TakeDamage((int)damage);
-        }
-        else
-        {
-            Debug.Log("zombie 3");
-            // Fallback: destroy the enemy directly if no Health script found
-            Debug.LogWarning($"[Trap] No Health component found on {other.name}. Destroying directly.");
-            Destroy(other.gameObject);
         }
 
         // Spawn optional visual effect
